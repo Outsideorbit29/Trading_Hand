@@ -29,11 +29,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user || null);
-      setLoading(false);
-    });
+    const initializeSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setSession(session);
+        setUser(session?.user || null);
+      } catch (error) {
+        // Handle invalid refresh token or other auth errors
+        console.warn('Session initialization failed:', error);
+        setSession(null);
+        setUser(null);
+        setIsGuest(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    initializeSession();
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(

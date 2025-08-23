@@ -1,16 +1,48 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PlusIcon, LinkIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, LinkIcon, ServerIcon } from '@heroicons/react/24/outline';
 import { usePortfolio } from '../contexts/PortfolioContext';
 import { useAuth } from '../contexts/AuthContext';
 import BrokerList from '../components/BrokerList';
 import BrokerAuthModal from '../components/BrokerAuthModal';
+import MT5ConnectionModal from '../components/MT5ConnectionModal';
+import MT5AccountCard from '../components/MT5AccountCard';
+import { mt5BrokerService } from '../services/mt5BrokerService';
 
 export default function Brokers() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isMT5ModalOpen, setIsMT5ModalOpen] = useState(false);
   const [selectedBroker, setSelectedBroker] = useState('');
+  const [mt5Accounts, setMT5Accounts] = useState<any[]>([]);
+  const [mt5Loading, setMt5Loading] = useState(false);
   const { brokers, loading } = usePortfolio();
   const { isGuest } = useAuth();
+
+  React.useEffect(() => {
+    if (!isGuest) {
+      loadMT5Accounts();
+    }
+  }, [isGuest]);
+
+  const loadMT5Accounts = async () => {
+    try {
+      setMt5Loading(true);
+      const accounts = await mt5BrokerService.getAllConnectedAccounts();
+      setMT5Accounts(accounts);
+    } catch (error) {
+      console.error('Failed to load MT5 accounts:', error);
+    } finally {
+      setMt5Loading(false);
+    }
+  };
+
+  const handleMT5Success = (accountData: any) => {
+    loadMT5Accounts();
+  };
+
+  const handleMT5Disconnect = () => {
+    loadMT5Accounts();
+  };
 
   if (loading) {
     return (
@@ -47,6 +79,28 @@ export default function Brokers() {
       </motion.div>
 
       {!isGuest && (
+        <>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="bg-green-600 bg-opacity-20 border border-green-600 rounded-lg p-4"
+          >
+            <h3 className="text-green-400 font-medium mb-2">🚀 Direct MT5 Connection</h3>
+            <p className="text-green-300 text-sm mb-3">
+              Connect directly to your MT5 terminal for real-time account data and trading.
+            </p>
+            <button
+              onClick={() => setIsMT5ModalOpen(true)}
+              className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+            >
+              <ServerIcon className="w-4 h-4 mr-2" />
+              Connect MT5 Terminal
+            </button>
+          </motion.div>
+        </>
+      )}
+
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -64,6 +118,28 @@ export default function Brokers() {
             <span className="mr-2">🟢</span>
             Connect Exness MT5
           </button>
+        </motion.div>
+
+      {/* MT5 Connected Accounts */}
+      {mt5Accounts.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.15 }}
+          className="space-y-4"
+        >
+          <h2 className="text-xl font-semibold text-white">Connected MT5 Accounts</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {mt5Accounts.map((account, index) => (
+              <MT5AccountCard
+                key={`${account.connection_info.login}_${account.connection_info.server}`}
+                accountData={account.account_data}
+                connectionInfo={account.connection_info}
+                onRefresh={loadMT5Accounts}
+                onDisconnect={handleMT5Disconnect}
+              />
+            ))}
+          </div>
         </motion.div>
       )}
 
@@ -83,6 +159,12 @@ export default function Brokers() {
           setSelectedBroker('');
         }}
         brokerType={selectedBroker}
+      />
+
+      <MT5ConnectionModal
+        isOpen={isMT5ModalOpen}
+        onClose={() => setIsMT5ModalOpen(false)}
+        onSuccess={handleMT5Success}
       />
     </div>
   );
