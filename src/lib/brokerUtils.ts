@@ -18,14 +18,14 @@ export const saveBrokerConnection = async (
   credentials: BrokerCredentials
 ): Promise<void> => {
   if (!supabase) {
-    throw new Error('Supabase client is not initialized');
+    throw new Error('Supabase client is not initialized. Please check your Supabase configuration in the .env file');
   }
 
   try {
     // Encrypt sensitive credentials before storing (in a real app, use proper encryption)
     const encryptedCredentials = btoa(JSON.stringify(credentials));
     
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('brokers')
       .insert({
         user_id: userId,
@@ -33,14 +33,44 @@ export const saveBrokerConnection = async (
         api_key: credentials.api_key || credentials.login || '',
         api_secret: credentials.password || credentials.api_secret || '',
         is_active: true,
-      });
+      })
+      .select();
 
     if (error) {
-      console.error('Error saving broker connection:', error);
-      throw new Error(error.message || 'Failed to save broker connection');
+      console.error('❌ Database error saving broker connection:', {
+        error,
+        userId,
+        brokerName,
+        credentials: { ...credentials, password: '***', api_secret: '***' }
+      });
+      
+      if (error.code === '23505') {
+        throw new Error('A broker connection with these credentials already exists');
+      } else if (error.code === '42501') {
+        throw new Error('Permission denied. Please check your database permissions');
+      } else {
+        throw new Error(`Failed to save broker connection: ${error.message || 'Unknown database error'}`);
+      }
     }
-  } catch (error) {
-    console.error('Error in saveBrokerConnection:', error);
+
+    console.log('✅ Broker connection saved successfully:', data);
+  } catch (error: any) {
+    console.error('❌ Error in saveBrokerConnection:', {
+      message: error.message,
+      stack: error.stack,
+      userId,
+      brokerName
+    });
+    
+    // Provide more specific error messages
+    if (error.message.includes('Supabase not configured')) {
+      throw new Error('Database configuration error: Please check your Supabase credentials in the .env file');
+    } else if (error.message.includes('permission denied')) {
+      throw new Error('Database permission error: Please check your database row-level security policies');
+    } else if (error.message.includes('network error')) {
+      throw new Error('Network error: Unable to connect to the database. Please check your internet connection');
+    }
+    
     throw error;
   }
 };
