@@ -15,6 +15,7 @@ export default function Brokers() {
   const [selectedBroker, setSelectedBroker] = useState('');
   const [mt5Accounts, setMT5Accounts] = useState<any[]>([]);
   const [mt5Loading, setMt5Loading] = useState(false);
+  const [mt5ServiceError, setMt5ServiceError] = useState<string | null>(null);
   const { brokers, loading } = usePortfolio();
   const { isGuest } = useAuth();
 
@@ -27,10 +28,12 @@ export default function Brokers() {
   const loadMT5Accounts = async () => {
     try {
       setMt5Loading(true);
+      setMt5ServiceError(null);
       const accounts = await mt5BrokerService.getAllConnectedAccounts();
       setMT5Accounts(accounts);
     } catch (error) {
       console.error('Failed to load MT5 accounts:', error);
+      setMt5ServiceError(error instanceof Error ? error.message : 'Failed to connect to MT5 service');
     } finally {
       setMt5Loading(false);
     }
@@ -80,10 +83,29 @@ export default function Brokers() {
 
       {!isGuest && (
         <>
+          {mt5ServiceError && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-red-600 bg-opacity-20 border border-red-600 rounded-lg p-4"
+            >
+              <h3 className="text-red-400 font-medium mb-2">⚠️ MT5 Service Unavailable</h3>
+              <p className="text-red-300 text-sm mb-3">
+                {mt5ServiceError}
+              </p>
+              <div className="text-red-300 text-xs space-y-1">
+                <p><strong>To fix this:</strong></p>
+                <p>1. Open a terminal in your project directory</p>
+                <p>2. Install dependencies: <code className="bg-red-900 px-1 rounded">pip install -r requirements.txt</code></p>
+                <p>3. Start the service: <code className="bg-red-900 px-1 rounded">python mt5_broker_service.py</code></p>
+              </div>
+            </motion.div>
+          )}
+
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05 }}
+            transition={{ delay: mt5ServiceError ? 0.1 : 0.05 }}
             className="bg-green-600 bg-opacity-20 border border-green-600 rounded-lg p-4"
           >
             <h3 className="text-green-400 font-medium mb-2">🚀 Direct MT5 Connection</h3>
@@ -92,10 +114,15 @@ export default function Brokers() {
             </p>
             <button
               onClick={() => setIsMT5ModalOpen(true)}
-              className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+              disabled={!!mt5ServiceError}
+              className={`inline-flex items-center px-4 py-2 rounded-lg transition-colors text-sm font-medium ${
+                mt5ServiceError 
+                  ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
+                  : 'bg-green-600 text-white hover:bg-green-700'
+              }`}
             >
               <ServerIcon className="w-4 h-4 mr-2" />
-              Connect MT5 Terminal
+              {mt5ServiceError ? 'Service Unavailable' : 'Connect MT5 Terminal'}
             </button>
           </motion.div>
         </>
@@ -104,7 +131,7 @@ export default function Brokers() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
+          transition={{ delay: mt5ServiceError ? 0.15 : 0.1 }}
           className="bg-blue-600 bg-opacity-20 border border-blue-600 rounded-lg p-4"
         >
           <h3 className="text-blue-400 font-medium mb-2">🚀 Quick Connect</h3>

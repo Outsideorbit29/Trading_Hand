@@ -39,8 +39,25 @@ interface MT5ApiResponse {
 class MT5BrokerService {
   private baseUrl = 'http://localhost:5001/api/mt5';
 
+  private async checkServiceAvailability(): Promise<boolean> {
+    try {
+      const response = await fetch(`${this.baseUrl}/status`, {
+        method: 'GET',
+        signal: AbortSignal.timeout(3000), // 3 second timeout
+      });
+      return response.ok;
+    } catch (error) {
+      return false;
+    }
+  }
+
   async connectAccount(connectionData: MT5ConnectionData): Promise<MT5AccountData> {
     try {
+      const isAvailable = await this.checkServiceAvailability();
+      if (!isAvailable) {
+        throw new Error('MT5 service is not running. Please start the Python Flask server by running: python mt5_broker_service.py');
+      }
+
       const response = await fetch(`${this.baseUrl}/connect`, {
         method: 'POST',
         headers: {
@@ -64,6 +81,11 @@ class MT5BrokerService {
 
   async getAccountInfo(login: string, server: string): Promise<MT5AccountData> {
     try {
+      const isAvailable = await this.checkServiceAvailability();
+      if (!isAvailable) {
+        throw new Error('MT5 service is not running. Please start the Python Flask server.');
+      }
+
       const response = await fetch(`${this.baseUrl}/account-info?login=${login}&server=${server}`);
       const data: MT5ApiResponse = await response.json();
 
@@ -80,6 +102,11 @@ class MT5BrokerService {
 
   async disconnectAccount(login: string, server: string): Promise<void> {
     try {
+      const isAvailable = await this.checkServiceAvailability();
+      if (!isAvailable) {
+        throw new Error('MT5 service is not running. Please start the Python Flask server.');
+      }
+
       const response = await fetch(`${this.baseUrl}/disconnect`, {
         method: 'POST',
         headers: {
@@ -109,6 +136,11 @@ class MT5BrokerService {
     account_data: MT5AccountData;
   }>> {
     try {
+      const isAvailable = await this.checkServiceAvailability();
+      if (!isAvailable) {
+        throw new Error('MT5 service is not running. Please start the Python Flask server by running: python mt5_broker_service.py');
+      }
+
       const response = await fetch(`${this.baseUrl}/accounts`);
       const data: MT5ApiResponse = await response.json();
 
@@ -128,6 +160,11 @@ class MT5BrokerService {
     terminal_info?: any;
   }> {
     try {
+      const isAvailable = await this.checkServiceAvailability();
+      if (!isAvailable) {
+        return { status: 'disconnected' };
+      }
+
       const response = await fetch(`${this.baseUrl}/status`);
       const data = await response.json();
 
