@@ -12,6 +12,7 @@ interface Trade {
   status: 'open' | 'closed';
   market_type: 'forex' | 'crypto';
   created_at: string;
+  source?: 'mt5' | 'manual';
 }
 
 interface RecentTradesProps {
@@ -46,6 +47,9 @@ export default function RecentTrades({ trades }: RecentTradesProps) {
               <p className="text-white font-medium">{trade.symbol}</p>
               <p className="text-sm text-gray-400">
                 {trade.side.toUpperCase()} • {trade.market_type.toUpperCase()}
+                {trade.source === 'mt5' && (
+                  <span className="ml-1 text-blue-400">• MT5</span>
+                )}
               </p>
             </div>
           </div>

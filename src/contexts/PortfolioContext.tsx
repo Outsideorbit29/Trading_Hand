@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from './AuthContext';
+import { mt5Service } from '../services/mt5Service';
+import { mt5BrokerService } from '../services/mt5BrokerService';
 
 interface Trade {
   id: string;
@@ -14,6 +16,21 @@ interface Trade {
   market_type: 'forex' | 'crypto';
   created_at: string;
   closed_at: string | null;
+}
+
+interface MT5Trade {
+  id: string;
+  symbol: string;
+  side: 'buy' | 'sell';
+  quantity: number;
+  entry_price: number;
+  exit_price: number | null;
+  profit_loss: number;
+  status: 'open' | 'closed';
+  market_type: 'forex' | 'crypto';
+  created_at: string;
+  closed_at: string | null;
+  source: 'mt5';
 }
 
 interface Broker {
@@ -35,6 +52,8 @@ interface PortfolioStats {
 
 interface PortfolioContextType {
   trades: Trade[];
+  mt5Trades: MT5Trade[];
+  allTrades: (Trade | MT5Trade)[];
   brokers: Broker[];
   stats: PortfolioStats;
   loading: boolean;
@@ -52,6 +71,7 @@ const PortfolioContext = createContext<PortfolioContextType | undefined>(undefin
 export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   const { user, isGuest } = useAuth();
   const [trades, setTrades] = useState<Trade[]>([]);
+  const [mt5Trades, setMt5Trades] = useState<MT5Trade[]>([]);
   const [brokers, setBrokers] = useState<Broker[]>([]);
   const [connectedBroker, setConnectedBroker] = useState<Broker | null>(null);
   const [brokerConnectionStatus, setBrokerConnectionStatus] = useState<'connected' | 'disconnected' | 'connecting'>('disconnected');
@@ -65,6 +85,9 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   });
   const [loading, setLoading] = useState(true);
   const [subscription, setSubscription] = useState<any>(null);
+  
+  // Combine manual trades and MT5 trades
+  const allTrades = [...trades, ...mt5Trades];
   
   const connectBroker = async (brokerId: string) => {
     setBrokerConnectionStatus('connecting');
@@ -144,6 +167,43 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     },
   ];
 
+  const fetchMT5Trades = async () => {
+    if (!user || isGuest) return;
+
+    try {
+      // Check if MT5 service is available
+      const isAvailable = await mt5BrokerService.checkServiceAvailability();
+      if (!isAvailable) {
+        console.log('MT5 service not available, skipping MT5 trades fetch');
+        return;
+      }
+
+      // Get MT5 trades from database
+      const mt5TradeHistory = await mt5Service.getTradeHistory(user.id);
+      
+      // Convert MT5 trades to our trade format
+      const convertedTrades: MT5Trade[] = mt5TradeHistory.map(trade => ({
+        id: trade.id,
+        symbol: trade.symbol,
+        side: trade.type === 0 ? 'buy' : 'sell',
+        quantity: trade.volume,
+        entry_price: trade.price_open,
+        exit_price: trade.price_close || null,
+        profit_loss: trade.profit,
+        status: trade.price_close ? 'closed' : 'open',
+        market_type: 'forex' as const,
+        created_at: trade.open_time || new Date().toISOString(),
+        closed_at: trade.close_time || null,
+        source: 'mt5' as const,
+      }));
+
+      setMt5Trades(convertedTrades);
+    } catch (error) {
+      console.error('Error fetching MT5 trades:', error);
+      // Don't throw error, just log it
+    }
+  };
+
   const fetchTrades = async () => {
     if (!user || isGuest || !supabase) return;
 
@@ -182,13 +242,14 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
   };
 
   const calculateStats = (trades: Trade[]) => {
-    const totalTrades = trades.length;
-    const openTrades = trades.filter(t => t.status === 'open').length;
-    const closedTrades = trades.filter(t => t.status === 'closed').length;
-    const totalProfitLoss = trades.reduce((sum, trade) => sum + trade.profit_loss, 0);
-    const winningTrades = trades.filter(t => t.profit_loss > 0).length;
+    const allTradesForStats = [...trades, ...mt5Trades];
+    const totalTrades = allTradesForStats.length;
+    const openTrades = allTradesForStats.filter(t => t.status === 'open').length;
+    const closedTrades = allTradesForStats.filter(t => t.status === 'closed').length;
+    const totalProfitLoss = allTradesForStats.reduce((sum, trade) => sum + trade.profit_loss, 0);
+    const winningTrades = allTradesForStats.filter(t => t.profit_loss > 0).length;
     const winRate = closedTrades > 0 ? (winningTrades / closedTrades) * 100 : 0;
-    const totalInvested = trades.reduce((sum, trade) => sum + (trade.entry_price * trade.quantity), 0);
+    const totalInvested = allTradesForStats.reduce((sum, trade) => sum + (trade.entry_price * trade.quantity), 0);
 
     setStats({
       totalTrades,
@@ -205,8 +266,9 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
     if (isGuest) {
       setTrades(sampleTrades);
       setBrokers(sampleBrokers);
+      setMt5Trades([]);
     } else {
-      await Promise.all([fetchTrades(), fetchBrokers()]);
+      await Promise.all([fetchTrades(), fetchBrokers(), fetchMT5Trades()]);
     }
     setLoading(false);
   };
@@ -311,7 +373,7 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     calculateStats(trades);
-  }, [trades]);
+  }, [trades, mt5Trades]);
 
   // Real-time subscription for trades
   useEffect(() => {
@@ -436,6 +498,8 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
 
   const value = {
     trades,
+    mt5Trades,
+    allTrades,
     brokers,
     stats,
     loading,

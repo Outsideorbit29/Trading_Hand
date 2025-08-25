@@ -39,7 +39,7 @@ interface MT5ApiResponse {
 class MT5BrokerService {
   private baseUrl = 'http://localhost:5001/api/mt5';
 
-  private async checkServiceAvailability(): Promise<boolean> {
+  async checkServiceAvailability(): Promise<boolean> {
     try {
       const response = await fetch(`${this.baseUrl}/status`, {
         method: 'GET',

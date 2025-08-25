@@ -14,6 +14,7 @@ interface Trade {
   market_type: 'forex' | 'crypto';
   created_at: string;
   closed_at: string | null;
+  source?: 'mt5' | 'manual';
 }
 
 interface TradeListProps {
@@ -73,7 +74,14 @@ export default function TradeList({ trades }: TradeListProps) {
               <td className="px-6 py-4 whitespace-nowrap">
                 <div>
                   <div className="text-sm font-medium text-white">{trade.symbol}</div>
-                  <div className="text-sm text-gray-400">{trade.market_type.toUpperCase()}</div>
+                  <div className="text-sm text-gray-400">
+                    {trade.market_type.toUpperCase()}
+                    {trade.source === 'mt5' && (
+                      <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                        MT5
+                      </span>
+                    )}
+                  </div>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">

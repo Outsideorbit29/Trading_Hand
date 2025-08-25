@@ -8,6 +8,7 @@ interface Trade {
   status: 'open' | 'closed';
   entry_price: number;
   quantity: number;
+  source?: 'mt5' | 'manual';
 }
 
 interface PerformanceMetricsProps {

@@ -26,6 +26,7 @@ interface Trade {
   id: string;
   profit_loss: number;
   created_at: string;
+  source?: 'mt5' | 'manual';
 }
 
 interface ProfitLossChartProps {

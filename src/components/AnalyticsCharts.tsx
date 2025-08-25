@@ -20,6 +20,7 @@ interface Trade {
   profit_loss: number;
   market_type: 'forex' | 'crypto';
   status: 'open' | 'closed';
+  source?: 'mt5' | 'manual';
 }
 
 interface AnalyticsChartsProps {

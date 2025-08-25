@@ -8,7 +8,7 @@ import AddTradeModal from '../components/AddTradeModal';
 
 export default function Trades() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const { trades, loading } = usePortfolio();
+  const { allTrades, loading } = usePortfolio();
   const { isGuest } = useAuth();
 
   if (loading) {
@@ -53,7 +53,7 @@ export default function Trades() {
         transition={{ delay: 0.2 }}
         className="bg-gray-800 rounded-xl shadow-xl overflow-hidden"
       >
-        <TradeList trades={trades} />
+        <TradeList trades={allTrades} />
       </motion.div>
 
       <AddTradeModal

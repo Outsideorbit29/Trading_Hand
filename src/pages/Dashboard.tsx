@@ -14,7 +14,7 @@ import RecentTrades from '../components/RecentTrades';
 import ProfitLossChart from '../components/ProfitLossChart';
 
 export default function Dashboard() {
-  const { stats, trades, loading } = usePortfolio();
+  const { stats, allTrades, loading } = usePortfolio();
 
   if (loading) {
     return (
@@ -24,7 +24,9 @@ export default function Dashboard() {
     );
   }
 
-  const recentTrades = trades.slice(0, 5);
+  const recentTrades = allTrades
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    .slice(0, 5);
 
   return (
     <div className="space-y-6">
@@ -78,7 +80,7 @@ export default function Dashboard() {
           className="bg-gray-800 rounded-xl p-6 shadow-xl"
         >
           <h2 className="text-xl font-semibold text-white mb-4">Profit & Loss Trend</h2>
-          <ProfitLossChart trades={trades} />
+          <ProfitLossChart trades={allTrades} />
         </motion.div>
 
         <motion.div

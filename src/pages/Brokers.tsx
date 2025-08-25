@@ -30,16 +30,9 @@ export default function Brokers() {
       setMt5Loading(true);
       setMt5ServiceError(null);
       
-      // Check if MT5 service is available first
-      const isServiceAvailable = await mt5BrokerService.checkServiceAvailability();
-      if (!isServiceAvailable) {
-        setMt5ServiceError('MT5 service is not running. Please start the Python Flask server by running: python mt5_broker_service.py');
-        setMT5Accounts([]);
-        return;
-      }
-      
       const accounts = await mt5BrokerService.getAllConnectedAccounts();
       setMT5Accounts(accounts);
+      setMt5ServiceError(null);
     } catch (error) {
       console.error('Failed to load MT5 accounts:', error);
       setMt5ServiceError('MT5 service is not running. Please start the Python Flask server by running: python mt5_broker_service.py');

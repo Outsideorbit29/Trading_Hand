@@ -5,7 +5,7 @@ import AnalyticsCharts from '../components/AnalyticsCharts';
 import PerformanceMetrics from '../components/PerformanceMetrics';
 
 export default function Analytics() {
-  const { trades, loading } = usePortfolio();
+  const { allTrades, loading } = usePortfolio();
 
   if (loading) {
     return (
@@ -26,8 +26,8 @@ export default function Analytics() {
         <p className="text-gray-400">Deep dive into your trading performance</p>
       </motion.div>
 
-      <PerformanceMetrics trades={trades} />
-      <AnalyticsCharts trades={trades} />
+      <PerformanceMetrics trades={allTrades} />
+      <AnalyticsCharts trades={allTrades} />
     </div>
   );
 }
