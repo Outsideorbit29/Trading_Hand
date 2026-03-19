@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ZapIcon, HistoryIcon, BrainIcon, GlobeIcon, TrendingUpIcon, BarChart3Icon } from './shared/Icons';
+import { ZapIcon, HistoryIcon, BrainIcon, GlobeIcon, TrendingUpIcon, BarChart3Icon, ShieldIcon } from './shared/Icons';
 import { generateDocumentation } from '../services/documentationService';
 import Footer from './Footer';
 
@@ -339,59 +339,92 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-gray-200">
+    <div className="min-h-screen text-gray-200">
       {/* Hero Section */}
-      <div className="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-24">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
+      <div className="relative overflow-hidden py-32 flex flex-col items-center">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none delay-700"></div>
         
-        <div className="relative max-w-4xl mx-auto text-center">
-          <svg className="w-16 h-16 mx-auto mb-6 text-cyan-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-          </svg>
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent mb-6">
-            Trading Hand
+        <div className="relative w-full text-center stagger-in">
+          <div className="inline-block mb-6 relative">
+            <div className="absolute inset-0 bg-cyan-400 blur-xl opacity-20 animate-pulse"></div>
+            <svg className="w-20 h-20 mx-auto text-cyan-400 relative" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+          </div>
+          
+          <h1 className="text-6xl md:text-8xl font-black font-orbitron mb-6 tracking-tighter">
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+              TRADING HAND
+            </span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-10">
-            Your Complete Automated Trading Solution Powered by AI & Technical Analysis
+          
+          <p className="text-xl md:text-3xl text-gray-400 mb-12 font-rajdhani max-w-3xl mx-auto leading-tight italic">
+            Next-Gen <span className="text-cyan-400">Automated Intelligence</span> for the Modern Trader.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <button 
               onClick={() => onNavigate?.('dashboard')}
-              className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 rounded-lg font-bold text-white transition transform hover:scale-105"
+              className="cyber-button group px-10 py-4 bg-cyan-500 text-black font-bold font-orbitron relative overflow-hidden transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] active:scale-95"
             >
-              Get Started
+              <span className="relative z-10 flex items-center gap-2 uppercase tracking-widest">
+                Initialize Bot <ZapIcon />
+              </span>
             </button>
             <button 
               onClick={() => onNavigate?.('features')}
-              className="px-8 py-3 border-2 border-cyan-400 hover:bg-cyan-400/10 rounded-lg font-bold text-cyan-400 transition"
+              className="px-10 py-4 glass-panel border border-cyan-500/30 hover:border-cyan-400 font-bold font-orbitron text-cyan-400 transition-all uppercase tracking-widest hover:bg-cyan-500/10 active:scale-95"
             >
-              Learn More
+              Systems Overview
             </button>
+          </div>
+
+          <div className="mt-20 flex justify-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
+            <div className="flex flex-col items-center">
+              <span className="text-3xl font-bold font-orbitron">MT5</span>
+              <span className="text-[10px] uppercase tracking-widest">Integrated</span>
+            </div>
+            <div className="flex flex-col items-center border-l border-gray-700 pl-12">
+              <span className="text-3xl font-bold font-orbitron font-rajdhani">AI-GEN</span>
+              <span className="text-[10px] uppercase tracking-widest">Analysis</span>
+            </div>
+            <div className="flex flex-col items-center border-l border-gray-700 pl-12">
+              <span className="text-3xl font-bold font-orbitron">2.4ms</span>
+              <span className="text-[10px] uppercase tracking-widest">Latency</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Features Section */}
-      <div className="px-4 sm:px-6 lg:px-8 py-24 bg-gray-800/50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-4">Powerful Features</h2>
-          <p className="text-gray-400 text-center mb-16 text-lg">Everything you need to automate and optimize your trading</p>
+      <div className="py-32 relative">
+        <div className="w-full relative">
+          <div className="flex flex-col items-center mb-20 stagger-in">
+            <h2 className="text-4xl md:text-5xl font-black font-orbitron mb-4 text-center">Core Modules</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+          </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 stagger-in">
             {features.map((feature, index) => (
-              <button
+              <div
                 key={index}
                 onClick={() => setSelectedFeature(index)}
-                className="p-6 bg-gray-800 border border-gray-700 hover:border-cyan-500/50 rounded-xl transition transform hover:scale-105 cursor-pointer pop-on-click text-left"
+                className="glass-panel group p-8 rounded-none border-l-2 border-l-cyan-500/50 hover:border-l-cyan-400 transition-all cursor-pointer relative overflow-hidden"
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center mb-4 text-white">
+                <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-100 transition-opacity">
+                  <div className="w-4 h-4 border-t-2 border-r-2 border-cyan-400"></div>
+                </div>
+                <div className="w-14 h-14 glass-panel border border-cyan-500/20 text-cyan-400 flex items-center justify-center mb-6 group-hover:bg-cyan-500 group-hover:text-black transition-all">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
-                <p className="text-gray-400">{feature.description}</p>
-                <p className="text-cyan-400 text-sm mt-3 font-semibold">Click to learn more →</p>
-              </button>
+                <h3 className="text-2xl font-bold mb-3 font-orbitron text-white group-hover:text-cyan-400 transition-colors">{feature.title}</h3>
+                <p className="text-gray-400 font-rajdhani text-lg leading-relaxed">{feature.description}</p>
+                <div className="mt-6 flex items-center gap-2 text-cyan-500/50 font-orbitron text-xs group-hover:text-cyan-400">
+                  <span className="w-1 h-1 bg-cyan-500 rounded-full animate-pulse"></span>
+                  Access Protocols
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -399,64 +432,40 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
 
       {/* Feature Detail Modal */}
       {selectedFeature !== null && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50" onClick={() => setSelectedFeature(null)}>
-          <div className="bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-cyan-500/30" onClick={(e) => e.stopPropagation()}>
-            <div className="sticky top-0 flex justify-between items-center p-6 border-b border-gray-700 bg-gray-800">
-              <h2 className="text-3xl font-bold text-white">{features[selectedFeature].title}</h2>
-              <button
-                onClick={() => setSelectedFeature(null)}
-                className="text-gray-400 hover:text-white text-2xl"
-              >
-                ✕
-              </button>
+        <div className="fixed inset-0 backdrop-blur-md bg-black/80 flex items-center justify-center p-4 z-[100]" onClick={() => setSelectedFeature(null)}>
+          <div className="glass-panel border-cyan-500/50 max-w-4xl w-full max-h-[90vh] overflow-y-auto relative animate-scale-in" onClick={(e) => e.stopPropagation()}>
+            <div className="flex justify-between items-center p-8 border-b border-cyan-500/10">
+              <h2 className="text-3xl font-black font-orbitron text-white">{features[selectedFeature].title}</h2>
+              <button onClick={() => setSelectedFeature(null)} className="w-10 h-10 flex items-center justify-center hover:bg-cyan-500/10 text-cyan-400 transition-all border border-cyan-500/20">✕</button>
             </div>
 
-            <div className="p-6">
-              {/* Feature Image */}
-              <div className="bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl p-6 mb-6 h-64 flex items-center justify-center border border-cyan-500/20">
-                {features[selectedFeature].image}
+            <div className="p-8 grid md:grid-cols-2 gap-8">
+              <div>
+                <div className="glass-panel border-cyan-500/10 p-8 mb-8 h-80 flex items-center justify-center bg-gray-900/40 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-cyan-500/5 group-hover:bg-cyan-500/10 transition-colors"></div>
+                  <div className="relative z-10 w-full h-full">
+                    {features[selectedFeature].image}
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-cyan-400 font-orbitron mb-4">Module Specifications</h3>
+                <p className="text-gray-300 font-rajdhani text-xl leading-relaxed italic">{features[selectedFeature].details}</p>
               </div>
 
-              {/* Detailed Description */}
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-cyan-400 mb-2">Overview</h3>
-                <p className="text-gray-300 leading-relaxed">{features[selectedFeature].details}</p>
-              </div>
-
-              {/* Benefits List */}
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-cyan-400 mb-4">Key Benefits</h3>
-                <div className="grid md:grid-cols-2 gap-3">
+              <div>
+                <h3 className="text-xl font-bold text-cyan-400 font-orbitron mb-6">Enhanced Benefits</h3>
+                <div className="space-y-4">
                   {features[selectedFeature].benefits.map((benefit, idx) => (
-                    <div key={idx} className="flex items-start gap-3 bg-gray-700/30 p-3 rounded-lg border border-cyan-500/20">
-                      <div className="w-6 h-6 bg-cyan-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-gray-200">{benefit}</span>
+                    <div key={idx} className="flex items-center gap-4 glass-panel p-4 border-l-2 border-l-cyan-500 hover:bg-cyan-500/5 transition-all">
+                      <ShieldIcon className="text-cyan-400 w-5 h-5" />
+                      <span className="text-gray-200 font-orbitron text-sm">{benefit}</span>
                     </div>
                   ))}
                 </div>
-              </div>
-
-              {/* CTA */}
-              <div className="flex gap-3">
-                <button
-                  onClick={() => {
-                    setSelectedFeature(null);
-                    onNavigate?.('dashboard');
-                  }}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 rounded-lg font-bold text-white transition"
-                >
-                  Try Now
-                </button>
-                <button
-                  onClick={() => setSelectedFeature(null)}
-                  className="flex-1 px-6 py-3 border-2 border-cyan-400 hover:bg-cyan-400/10 rounded-lg font-bold text-cyan-400 transition"
-                >
-                  Close
-                </button>
+                
+                <div className="mt-12 flex gap-4">
+                  <button onClick={() => { setSelectedFeature(null); onNavigate?.('dashboard'); }} className="cyber-button flex-1 py-4 bg-cyan-500 text-black font-bold font-orbitron uppercase tracking-widest">Activate</button>
+                  <button onClick={() => setSelectedFeature(null)} className="flex-1 py-4 glass-panel border border-cyan-500/30 text-cyan-400 font-bold font-orbitron uppercase tracking-widest">Standby</button>
+                </div>
               </div>
             </div>
           </div>
@@ -464,212 +473,50 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       )}
 
       {/* Markets Section */}
-      <div className="px-4 sm:px-6 lg:px-8 py-24">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-4">Multiple Markets</h2>
-          <p className="text-gray-400 text-center mb-16 text-lg">Trade across different asset classes and markets</p>
+      <div className="py-32 bg-cyan-500/[0.02]">
+        <div className="w-full">
+          <div className="flex flex-col items-center mb-20 stagger-in">
+            <h2 className="text-4xl md:text-5xl font-black font-orbitron mb-4 text-center">Global Access</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent"></div>
+          </div>
           
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 stagger-in">
             {markets.map((market, index) => (
-              <button
+              <div
                 key={index}
                 onClick={() => setSelectedMarket(index)}
-                className="p-8 bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 hover:border-cyan-500/50 rounded-xl transition transform hover:scale-105 cursor-pointer pop-on-click text-left"
+                className="glass-panel group p-10 hover:bg-cyan-500/5 transition-all cursor-pointer relative overflow-hidden flex flex-col items-start"
               >
-                <h3 className="text-2xl font-bold mb-2 text-white flex items-center gap-3">
-                  <span className="text-3xl">{market.emoji}</span>
-                  {market.name}
-                </h3>
-                <p className="text-gray-400 mb-4">{market.description}</p>
-                <div className="flex items-center gap-2 text-cyan-400 text-sm mb-3">
-                  <span className="w-2 h-2 bg-cyan-400 rounded-full"></span>
-                  {market.pairs}
+                <div className="text-6xl mb-6 grayscale group-hover:grayscale-0 transition-all transform group-hover:scale-110 duration-500">{market.emoji}</div>
+                <h3 className="text-3xl font-black font-orbitron mb-4 text-white group-hover:text-cyan-400 transition-colors uppercase">{market.name}</h3>
+                <p className="text-gray-400 font-rajdhani text-xl mb-6">{market.description}</p>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {market.pairs.split(', ').map((pair, i) => (
+                    <span key={i} className="px-3 py-1 glass-panel border-cyan-500/10 text-cyan-500 text-[10px] font-orbitron">{pair}</span>
+                  ))}
                 </div>
-                <p className="text-cyan-400 text-sm font-semibold">Click to learn more →</p>
-              </button>
+                <span className="text-cyan-400 font-orbitron text-xs tracking-widest flex items-center gap-2">
+                  EXPLORE MARKET <div className="w-8 h-[1px] bg-cyan-400"></div>
+                </span>
+              </div>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Market Detail Modal */}
-      {selectedMarket !== null && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50" onClick={() => setSelectedMarket(null)}>
-          <div className="bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-cyan-500/30" onClick={(e) => e.stopPropagation()}>
-            <div className="sticky top-0 flex justify-between items-center p-6 border-b border-gray-700 bg-gray-800">
-              <h2 className="text-3xl font-bold text-white flex items-center gap-3">
-                <span className="text-3xl">{markets[selectedMarket].emoji}</span>
-                {markets[selectedMarket].name}
-              </h2>
-              <button
-                onClick={() => setSelectedMarket(null)}
-                className="text-gray-400 hover:text-white text-2xl"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="p-6">
-              {/* Market Image */}
-              <div className="bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl p-6 mb-6 h-64 flex items-center justify-center border border-cyan-500/20">
-                {markets[selectedMarket].image}
-              </div>
-
-              {/* Details */}
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-cyan-400 mb-2">Market Overview</h3>
-                <p className="text-gray-300 leading-relaxed">{markets[selectedMarket].details}</p>
-              </div>
-
-              {/* Trading Hours */}
-              <div className="mb-6 p-4 bg-gray-700/30 rounded-lg border border-cyan-500/20">
-                <h3 className="text-lg font-bold text-cyan-400 mb-2">Trading Hours</h3>
-                <p className="text-gray-300">{markets[selectedMarket].tradingHours}</p>
-              </div>
-
-              {/* Benefits */}
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-cyan-400 mb-4">Key Benefits</h3>
-                <div className="grid md:grid-cols-2 gap-3">
-                  {markets[selectedMarket].benefits.map((benefit, idx) => (
-                    <div key={idx} className="flex items-start gap-3 bg-gray-700/30 p-3 rounded-lg border border-cyan-500/20">
-                      <div className="w-6 h-6 bg-cyan-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <span className="text-gray-200">{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Instruments */}
-              <div className="mb-6">
-                <h3 className="text-lg font-bold text-cyan-400 mb-2">Popular Instruments</h3>
-                <p className="text-gray-300">{markets[selectedMarket].pairs}</p>
-              </div>
-
-              {/* CTA */}
-              <div className="flex gap-3">
-                <button
-                  onClick={() => {
-                    setSelectedMarket(null);
-                    onNavigate?.('dashboard');
-                  }}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 rounded-lg font-bold text-white transition"
-                >
-                  Trade Now
-                </button>
-                <button
-                  onClick={() => setSelectedMarket(null)}
-                  className="flex-1 px-6 py-3 border-2 border-cyan-400 hover:bg-cyan-400/10 rounded-lg font-bold text-cyan-400 transition"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Important Features Section */}
-      <div className="px-4 sm:px-6 lg:px-8 py-24 bg-gray-800/50">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-4">Important Features</h2>
-          <p className="text-gray-400 text-center mb-16 text-lg">Essential capabilities that set us apart</p>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {importantFeatures.map((feature, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedImpFeature(index)}
-                className="p-6 bg-gradient-to-br from-gray-700 to-gray-900 border border-gray-600 hover:border-cyan-500/50 rounded-xl transition transform hover:scale-105 cursor-pointer pop-on-click text-left"
-              >
-                <h3 className="text-2xl font-bold mb-2 text-white">{feature.title}</h3>
-                <p className="text-gray-400">{feature.description}</p>
-                <p className="text-cyan-400 text-sm mt-3 font-semibold">Click to explore →</p>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Important Feature Detail Modal */}
-      {selectedImpFeature !== null && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50" onClick={() => setSelectedImpFeature(null)}>
-          <div className="bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-cyan-500/30" onClick={(e) => e.stopPropagation()}>
-            <div className="sticky top-0 flex justify-between items-center p-6 border-b border-gray-700 bg-gray-800">
-              <h2 className="text-3xl font-bold text-white">{importantFeatures[selectedImpFeature].title}</h2>
-              <button
-                onClick={() => setSelectedImpFeature(null)}
-                className="text-gray-400 hover:text-white text-2xl"
-              >
-                ✕
-              </button>
-            </div>
-
-            <div className="p-6">
-              {/* Feature Image */}
-              <div className="bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl p-6 mb-6 h-64 flex items-center justify-center border border-cyan-500/20">
-                {importantFeatures[selectedImpFeature].image}
-              </div>
-
-              {/* Detailed Description */}
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-cyan-400 mb-2">Overview</h3>
-                <p className="text-gray-300 leading-relaxed">{importantFeatures[selectedImpFeature].details}</p>
-              </div>
-
-              {/* Stats Grid */}
-              <div className="mb-6">
-                <h3 className="text-xl font-bold text-cyan-400 mb-4">Key Statistics</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {importantFeatures[selectedImpFeature].stats.map((stat, idx) => (
-                    <div key={idx} className="p-3 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 rounded-lg border border-cyan-500/30 text-center">
-                      <p className="text-2xl font-bold text-cyan-400 mb-1">{stat.value}</p>
-                      <p className="text-gray-400 text-sm">{stat.label}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* CTA */}
-              <div className="flex gap-3">
-                <button
-                  onClick={() => {
-                    setSelectedImpFeature(null);
-                    onNavigate?.('dashboard');
-                  }}
-                  className="flex-1 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 rounded-lg font-bold text-white transition"
-                >
-                  Get Started
-                </button>
-                <button
-                  onClick={() => setSelectedImpFeature(null)}
-                  className="flex-1 px-6 py-3 border-2 border-cyan-400 hover:bg-cyan-400/10 rounded-lg font-bold text-cyan-400 transition"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Stats Section */}
-      <div className="px-4 sm:px-6 lg:px-8 py-24 bg-gray-800/50">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-6">
+      <div className="py-20 border-y border-cyan-500/10 bg-black/40">
+        <div className="w-full">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 stagger-in">
             {[
-              { label: "24/7 Trading", value: "Automated" },
-              { label: "Markets", value: "4+" },
-              { label: "Symbols", value: "1000+" },
-              { label: "Execution", value: "Instant" }
+              { label: "AI Execution", value: "Real-Time" },
+              { label: "Active Markets", value: "04+" },
+              { label: "Trading Assets", value: "1000+" },
+              { label: "System Uptime", value: "99.9%" }
             ].map((stat, index) => (
-              <div key={index} className="p-6 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/30 rounded-lg text-center">
-                <p className="text-3xl font-bold text-cyan-400 mb-2">{stat.value}</p>
-                <p className="text-gray-400">{stat.label}</p>
+              <div key={index} className="flex flex-col items-center text-center">
+                <p className="text-4xl md:text-5xl font-black font-orbitron text-white mb-2 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent">{stat.value}</p>
+                <p className="text-cyan-400 font-orbitron text-[10px] tracking-[0.3em] uppercase">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -677,28 +524,18 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       </div>
 
       {/* CTA Section */}
-      <div className="px-4 sm:px-6 lg:px-8 py-24 bg-gradient-to-r from-cyan-500/10 to-purple-500/10">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4">Ready to Start Trading?</h2>
-          <p className="text-xl text-gray-300 mb-8">Join traders using automated strategies to maximize profits</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => onNavigate?.('pricing')}
-              className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 rounded-lg font-bold text-white transition transform hover:scale-105"
-            >
-              Start Free Trial
-            </button>
-            <button 
-              onClick={generateDocumentation}
-              className="px-8 py-3 border-2 border-cyan-400 hover:bg-cyan-400/10 rounded-lg font-bold text-cyan-400 transition"
-            >
-              View Docs
-            </button>
+      <div className="py-32 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-blue-500/10 opacity-30"></div>
+        <div className="w-full text-center relative z-10 stagger-in">
+          <h2 className="text-5xl md:text-7xl font-black font-orbitron mb-8 tracking-tighter text-white">READY FOR ASCENSION?</h2>
+          <p className="text-xl md:text-2xl text-gray-400 font-rajdhani mb-12 italic">The horizon of automated wealth is one command away.</p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <button onClick={() => onNavigate?.('pricing')} className="cyber-button px-12 py-5 bg-cyan-500 text-black font-bold font-orbitron text-lg uppercase tracking-widest shadow-[0_0_50px_rgba(34,211,238,0.3)]">Establish Connection</button>
+            <button onClick={generateDocumentation} className="px-12 py-5 glass-panel border border-cyan-500/30 font-bold font-orbitron text-cyan-400 uppercase tracking-widest hover:bg-cyan-500/10">Technical Manual</button>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
       <Footer onNavigate={onNavigate} />
     </div>
   );

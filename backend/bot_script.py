@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 # MT5 credentials (kept here so the server only starts the bot when requested)
-LOGIN = 279478161
+LOGIN = 279539215
 PASSWORD = 'Anish@123'
 SERVER = 'Exness-MT5Trial8'
 
@@ -299,6 +299,97 @@ def get_trade_history(start_date=None):
 	except Exception as e:
 		logging.error(f"Error fetching trade history: {e}")
 		return []
+
+
+def get_risk_analysis():
+	"""Calculate risk metrics based on trade history"""
+	try:
+		trades = get_trade_history()
+		if not trades:
+			return {
+				'win_rate': 0,
+				'profit_factor': 0,
+				'expected_value': 0,
+				'max_drawdown': 0,
+				'sharpe_ratio': 0,
+				'consecutive_losses': 0,
+				'prob_profitable_100': 0,
+				'avg_win': 0,
+				'avg_loss': 0
+			}
+
+		pnls = [t['pnl'] for t in trades]
+		wins = [p for p in pnls if p > 0]
+		losses = [abs(p) for p in pnls if p < 0]
+
+		win_rate = len(wins) / len(pnls) if pnls else 0
+		total_profit = sum(wins)
+		total_loss = sum(losses)
+		profit_factor = total_profit / total_loss if total_loss > 0 else (total_profit if total_profit > 0 else 0)
+
+		avg_win = sum(wins) / len(wins) if wins else 0
+		avg_loss = sum(losses) / len(losses) if losses else 0
+
+		# Expected Value
+		ev = (win_rate * avg_win) - ((1 - win_rate) * avg_loss)
+
+		# Max Drawdown
+		cumulative = 0
+		peak = 0
+		max_dd = 0
+		for p in pnls:
+			cumulative += p
+			if cumulative > peak:
+				peak = cumulative
+			dd = peak - cumulative
+			if dd > max_dd:
+				max_dd = dd
+
+		# Sharpe Ratio (Simplified)
+		df = pd.Series(pnls)
+		sharpe = (df.mean() / df.std()) if len(df) > 1 and df.std() != 0 else 0
+
+		# Consecutive losses
+		max_consecutive_losses = 0
+		current_consecutive_losses = 0
+		for p in pnls:
+			if p < 0:
+				current_consecutive_losses += 1
+				max_consecutive_losses = max(max_consecutive_losses, current_consecutive_losses)
+			else:
+				current_consecutive_losses = 0
+
+		# Simple Probability of being profitable after 100 trades (using Normal Distribution approximation)
+		# Mean of 100 trades = 100 * EV
+		# Std dev of 100 trades = sqrt(100) * std(pnls)
+		import math
+		from scipy.stats import norm
+		
+		prob_profitable = 0
+		if len(pnls) > 1:
+			mean_100 = 100 * ev
+			std_100 = math.sqrt(100) * df.std()
+			if std_100 > 0:
+				# Probability that sum > 0 is 1 - CDF(0)
+				prob_profitable = 1 - norm.cdf(0, loc=mean_100, scale=std_100)
+			else:
+				prob_profitable = 1.0 if mean_100 > 0 else 0.0
+
+		return {
+			'win_rate': round(win_rate * 100, 2),
+			'profit_factor': round(profit_factor, 2),
+			'expected_value': round(ev, 2),
+			'max_drawdown': round(max_dd, 2),
+			'sharpe_ratio': round(sharpe, 2),
+			'consecutive_losses': max_consecutive_losses,
+			'prob_profitable_100': round(prob_profitable * 100, 2),
+			'avg_win': round(avg_win, 2),
+			'avg_loss': round(avg_loss, 2),
+			'total_trades': len(pnls)
+		}
+	except Exception as e:
+		logging.error(f"Error in risk analysis: {e}")
+		return {}
 
 
 

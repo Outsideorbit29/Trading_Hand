@@ -152,8 +152,8 @@ const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-gray-200">
       {/* Header */}
-      <div className="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-16 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border-b border-cyan-500/20">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="relative overflow-hidden py-16 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border-b border-cyan-500/20">
+        <div className="w-full text-center">
           <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
             Features & Benefits
           </h1>
@@ -164,8 +164,8 @@ const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
       </div>
 
       {/* Detailed Features Section */}
-      <div className="px-4 sm:px-6 lg:px-8 py-24">
-        <div className="max-w-6xl mx-auto">
+      <div className="py-24">
+        <div className="w-full">
           <h2 className="text-4xl font-bold mb-16 text-center">Comprehensive Features</h2>
           
           {detailedFeatures.map((feature, index) => (
@@ -196,8 +196,8 @@ const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
       </div>
 
       {/* Benefits Section */}
-      <div className="px-4 sm:px-6 lg:px-8 py-24 bg-gray-800/30">
-        <div className="max-w-6xl mx-auto">
+      <div className="py-24 bg-gray-800/30">
+        <div className="w-full">
           <h2 className="text-4xl font-bold mb-4 text-center">Key Benefits</h2>
           <p className="text-gray-400 text-center mb-16 text-lg">Why traders choose Trading Hand</p>
           
@@ -214,8 +214,8 @@ const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
       </div>
 
       {/* Statistics */}
-      <div className="px-4 sm:px-6 lg:px-8 py-24">
-        <div className="max-w-6xl mx-auto">
+      <div className="py-24">
+        <div className="w-full">
           <h2 className="text-4xl font-bold mb-16 text-center">Why Trading Hand?</h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -235,8 +235,8 @@ const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
       </div>
 
       {/* Contact Us Section */}
-      <div className="px-4 sm:px-6 lg:px-8 py-24 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border-t border-cyan-500/20">
-        <div className="max-w-2xl mx-auto">
+      <div className="py-24 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border-t border-cyan-500/20">
+        <div className="w-full">
           <h2 className="text-4xl font-bold mb-4 text-center">Get in Touch</h2>
           <p className="text-gray-300 text-center mb-12 text-lg">
             Have questions or need assistance? We're here to help!
@@ -324,7 +324,7 @@ const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
       </div>
 
       {/* Back Button */}
-      <div className="px-4 sm:px-6 lg:px-8 py-12 text-center border-t border-gray-700">
+      <div className="py-12 text-center border-t border-gray-700">
         <button
           onClick={() => onNavigate?.('home')}
           className="px-8 py-3 border-2 border-cyan-400 hover:bg-cyan-400/10 rounded-lg font-bold text-cyan-400 transition"

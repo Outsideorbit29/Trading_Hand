@@ -30,3 +30,16 @@ export interface AnalyticsInsight {
   error?: string;
   decisionPath?: BotDecisionStep[];
 }
+
+export interface RiskAnalysisData {
+  win_rate: number;
+  profit_factor: number;
+  expected_value: number;
+  max_drawdown: number;
+  sharpe_ratio: number;
+  consecutive_losses: number;
+  prob_profitable_100: number;
+  avg_win: number;
+  avg_loss: number;
+  total_trades: number;
+}

@@ -34,6 +34,12 @@ def get_trade_history():
     trades = bot_script.get_trade_history(datetime(2025, 1, 1))
     return jsonify({'trades': trades})
 
+@app.route('/risk-analysis', methods=['GET'])
+def get_risk_analysis():
+    """Get risk analysis metrics"""
+    analysis = bot_script.get_risk_analysis()
+    return jsonify(analysis)
+
 @app.route('/start', methods=['POST'])
 def start_bot():
     """Start the trading bot"""

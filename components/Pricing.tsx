@@ -111,8 +111,8 @@ const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-gray-200">
       {/* Header */}
-      <div className="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-16 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border-b border-cyan-500/20">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="relative overflow-hidden py-16 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border-b border-cyan-500/20">
+        <div className="w-full text-center">
           <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
             Simple, Transparent Pricing
           </h1>
@@ -122,8 +122,8 @@ const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      <div className="px-4 sm:px-6 lg:px-8 py-24">
-        <div className="max-w-7xl mx-auto">
+      <div className="py-24">
+        <div className="w-full">
           {paymentStep === 'plan-selection' ? (
             <>
               {/* Plans Grid */}
@@ -180,7 +180,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
               <div className="mt-24">
                 <h2 className="text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
 
-                <div className="max-w-3xl mx-auto space-y-6">
+                <div className="w-full space-y-6">
                   {[
                     {
                       q: 'Can I cancel my subscription anytime?',
@@ -210,7 +210,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
           ) : (
             <>
               {/* Payment Form */}
-              <div className="max-w-2xl mx-auto">
+              <div className="w-full px-10">
                 <div className="mb-8 p-6 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
                   <h2 className="text-2xl font-bold text-white mb-2">Payment for {selectedPlanData?.name}</h2>
                   <p className="text-cyan-400 text-lg">
@@ -322,7 +322,7 @@ const Pricing: React.FC<PricingProps> = ({ onNavigate }) => {
       </div>
 
       {/* Back Button */}
-      <div className="px-4 sm:px-6 lg:px-8 py-12 text-center border-t border-gray-700">
+      <div className="py-12 text-center border-t border-gray-700">
         <button
           onClick={() => onNavigate?.('home')}
           className="px-8 py-3 border-2 border-cyan-400 hover:bg-cyan-400/10 rounded-lg font-bold text-cyan-400 transition"

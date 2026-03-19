@@ -9,15 +9,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google/genai": "^1.29.1",
+    "framer-motion": "^12.37.0",
+    "jspdf": "^2.5.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "recharts": "^3.4.1",
-    "@google/genai": "^1.29.1",
-    "jspdf": "^2.5.1"
+    "recharts": "^3.4.1"
   },
   "devDependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
     "@types/node": "^22.14.0",
+    "@types/three": "^0.183.1",
     "@vitejs/plugin-react": "^5.0.0",
+    "three": "^0.183.2",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }

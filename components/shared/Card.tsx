@@ -8,7 +8,8 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ children, className = '' }) => {
   return (
-    <div className={`bg-gray-800 border border-gray-700 rounded-xl shadow-lg p-6 ${className}`}>
+    <div className={`glass-panel p-6 shadow-2xl relative overflow-hidden group ${className}`}>
+      <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500/30"></div>
       {children}
     </div>
   );
