@@ -14,14 +14,20 @@
       tailwind.config = {
         theme: {
           extend: {
+            fontSize: {
+              'xs': '0.85rem',   // Normal text-sm
+              'sm': '1rem',      // Normal text-base
+              'base': '1.15rem', // Normal text-lg
+              'lg': '1.35rem',
+            },
             fontFamily: {
               orbitron: ['Orbitron', 'sans-serif'],
               rajdhani: ['Rajdhani', 'sans-serif'],
             },
             colors: {
               cyber: {
-                bg: '#030712',
-                cyan: '#22d3ee',
+                bg: '#04091a', // Deeper background for contrast
+                cyan: '#38bdf8', // Brighter, clearer cyan
                 purple: '#a855f7',
                 green: '#10b981',
               }

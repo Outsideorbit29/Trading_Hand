@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Card from './shared/Card';
+import Card from '../shared/Card';
 
 type ProfileTab = 'overview' | 'personal' | 'broker' | 'payment' | 'security';
 

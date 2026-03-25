@@ -1,21 +1,23 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+p {
+  margin-bottom: 1.25rem;
+}
 :root {
-  --cyber-bg: #030712;
-  --cyber-cyan: #22d3ee;
+  --cyber-bg: #04091a;
+  --cyber-cyan: #38bdf8;
   --cyber-purple: #a855f7;
-  --cyber-glow: rgba(34, 211, 238, 0.4);
+  --cyber-glow: rgba(56, 189, 248, 0.4);
 }
 
 body {
   margin: 0;
   padding: 0;
   background-color: var(--cyber-bg);
-  color: #f9fafb;
+  color: #e5e7eb; /* Brighter gray */
   font-family: 'Rajdhani', sans-serif;
+  font-size: 16px; /* Increased from default */
+  line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* --- HUD Background Animation --- */
@@ -158,4 +160,20 @@ h1, h2, h3, .font-orbitron {
 @keyframes scan {
   from { transform: translateY(-100%); }
   to { transform: translateY(100vh); }
+}
+
+/* --- News Ticker Marquee --- */
+.animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 40s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }

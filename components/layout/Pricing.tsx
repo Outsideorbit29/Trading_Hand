@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircleIcon } from './shared/Icons';
+import { CheckCircleIcon } from '../shared/Icons';
 
 type Page = 'home' | 'dashboard' | 'history' | 'analytics' | 'profile' | 'features' | 'pricing';
 

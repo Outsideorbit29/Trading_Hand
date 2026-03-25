@@ -1,56 +1,55 @@
-# Backend Server for Trading Hand
+# Trading Hand Backend
 
-This directory contains the Python backend required to connect the web frontend to your local MetaTrader 5 script. The server listens for commands (start/stop) from the web UI and executes the trading bot script on your machine.
+The Trading Hand backend is a Flask-powered automation system that connects the React frontend to the MetaTrader 5 (MT5) terminal. It handles real-time data fetching, AI signal generation via XGBoost, and automated trade execution.
 
-## One-Time Setup
+## 📂 Project Structure
 
-You need Python 3 installed on your computer.
+- **`main.py`**: The Flask entry point. Handles HTTP requests from the frontend.
+- **`core/`**:
+  - `bot_script.py`: The main trading loop, MT5 management, and position syncing.
+  - `mo_engine.ipynb`: Interactive research and prediction logic (shifted from ml_engine.py).
+- **`models/`**: Stores trained `.joblib` models and feature scalers.
+- **`.env`**: Configuration for MT5 credentials and server settings.
 
-### 1. Create a Virtual Environment
+## 🚀 Setup & Execution
 
-Open a terminal or command prompt in this `backend` directory and run the following command to create an isolated Python environment:
+### 1. Prerequisites
+- Python 3.10+
+- MetaTrader 5 Terminal installed and logged in.
 
+### 2. Environment Setup
+Create and activate a virtual environment:
 ```bash
 python -m venv venv
+# Windows:
+.\venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
 ```
 
-### 2. Activate the Virtual Environment
-
-- **On Windows:**
-  ```cmd
-  .\venv\Scripts\activate
-  ```
-- **On macOS/Linux:**
-  ```bash
-  source venv/bin/activate
-  ```
-
-Your terminal prompt should now be prefixed with `(venv)`.
-
-### 3. Install Dependencies
-
-With the virtual environment active, install the required Python libraries:
-
+Install requirements:
 ```bash
-pip install Flask Flask-Cors MetaTrader5 pandas
+pip install -r requirements.txt
 ```
 
-## How to Run
+### 3. Configuration
+Copy the credentials template into a `.env` file (if not already present):
+```ini
+MT5_LOGIN=your_login
+MT5_PASSWORD=your_password
+MT5_SERVER=your_server
+FLASK_PORT=5000
+```
 
-**Before using the web dashboard**, you must start this server.
+### 4. Running the Server
+```bash
+python main.py
+```
 
-1.  Make sure your virtual environment is active (you see `(venv)` in your terminal prompt).
-2.  Run the server using the following command:
+## 🧠 Machine Learning Model
+The bot uses an **XGBoost Classifier** trained with technical indicators (EMA, RSI, ATR, MACD). The training process includes:
+1. **Triple Barrier Labeling**: Advanced trade outcome assessment.
+2. **SMOTE**: Handling class imbalance for high-precision signals.
+3. **Automated Retraining**: The bot can refresh its model with the latest market data directly.
 
-    ```bash
-    python server.py
-    ```
-
-3.  The server will start, and you will see output like this:
-    ```
-     * Running on http://127.0.0.1:5000
-    ```
-
-**Keep this terminal window open while you use the web application.** The bot's log messages (e.g., "Trend Direction...", "Order Placed...") will be printed here.
-
-You can now go to the web dashboard, and the "Start Bot" button will work correctly.
+For research or manual retraining, explore **`notebooks/ml_engine.ipynb`**.

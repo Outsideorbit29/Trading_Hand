@@ -79,8 +79,8 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
     <footer className="bg-gray-900 border-t border-gray-700 text-gray-300">
       {/* Main Footer Content */}
-      <div className="px-4 sm:px-6 lg:px-8 py-16">
-        <div className="max-w-7xl mx-auto">
+      <div className="px-4 md:px-12 py-16">
+        <div className="w-full">
           {/* Top Section: Logo and Description */}
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             {/* Brand Section */}
@@ -220,8 +220,8 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       </div>
 
       {/* Back to Top Button */}
-      <div className="px-4 sm:px-6 lg:px-8 py-4 bg-gray-800/50 border-t border-gray-700">
-        <div className="max-w-7xl mx-auto flex justify-center">
+      <div className="px-4 md:px-12 py-4 bg-gray-800/50 border-t border-gray-700">
+        <div className="w-full flex justify-center">
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="text-sm text-gray-400 hover:text-cyan-400 transition flex items-center gap-2"

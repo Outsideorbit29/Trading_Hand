@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Trade } from '../types';
-import { analyzeTradeWithGemini, analyzeBotTradeForVisualization, analyzeTradeWithQuestion } from '../services/geminiService';
+import { Trade } from '../../types';
+import { analyzeTradeWithGemini, analyzeBotTradeForVisualization, analyzeTradeWithQuestion } from '../../services/geminiService';
 
 const ChatBot: React.FC = () => {
   const [open, setOpen] = useState(false);

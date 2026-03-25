@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { Trade } from '../types';
+import { Trade } from '../../types';
 
 type InsightContextValue = {
   openChat: (trade: Trade) => void;

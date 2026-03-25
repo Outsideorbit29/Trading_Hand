@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ZapIcon, HistoryIcon, BrainIcon, GlobeIcon, TrendingUpIcon, BarChart3Icon, CheckCircleIcon } from './shared/Icons';
+import { ZapIcon, HistoryIcon, BrainIcon, GlobeIcon, TrendingUpIcon, BarChart3Icon, CheckCircleIcon } from '../shared/Icons';
 
 type Page = 'home' | 'dashboard' | 'history' | 'analytics' | 'profile' | 'features';
 

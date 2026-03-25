@@ -1,0 +1,10 @@
+pandas-ta
+xgboost
+imbalanced-learn
+joblib
+scipy
+flask
+flask-cors
+pandas
+MetaTrader5
+python-dotenv

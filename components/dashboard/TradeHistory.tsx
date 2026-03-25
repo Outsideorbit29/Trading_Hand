@@ -1,9 +1,9 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { FilterType, Trade } from '../types';
-import { useTradeInsight } from './TradeInsightProvider';
-import Card from './shared/Card';
-import Toggle from './shared/Toggle';
+import { FilterType, Trade } from '../../types';
+import { useTradeInsight } from '../layout/TradeInsightProvider';
+import Card from '../shared/Card';
+import Toggle from '../shared/Toggle';
 
 const API_BASE_URL = 'http://127.0.0.1:5000';
 

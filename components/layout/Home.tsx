@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ZapIcon, HistoryIcon, BrainIcon, GlobeIcon, TrendingUpIcon, BarChart3Icon, ShieldIcon } from './shared/Icons';
-import { generateDocumentation } from '../services/documentationService';
+import { ZapIcon, HistoryIcon, BrainIcon, GlobeIcon, TrendingUpIcon, BarChart3Icon, ShieldIcon } from '../shared/Icons';
+import { generateDocumentation } from '../../services/documentationService';
 import Footer from './Footer';
 
 type Page = 'home' | 'dashboard' | 'history' | 'analytics' | 'profile' | 'features' | 'pricing';
@@ -353,14 +353,14 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             </svg>
           </div>
           
-          <h1 className="text-6xl md:text-8xl font-black font-orbitron mb-6 tracking-tighter">
+          <h1 className="text-5xl sm:text-7xl lg:text-9xl font-black font-orbitron mb-6 md:mb-8 tracking-tighter">
             <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
               TRADING HAND
             </span>
           </h1>
           
-          <p className="text-xl md:text-3xl text-gray-400 mb-12 font-rajdhani max-w-3xl mx-auto leading-tight italic">
-            Next-Gen <span className="text-cyan-400">Automated Intelligence</span> for the Modern Trader.
+          <p className="text-2xl md:text-4xl text-gray-300 mb-16 font-rajdhani max-w-4xl mx-auto leading-relaxed italic">
+            Next-Gen <span className="text-cyan-400 font-bold">Automated Intelligence</span> for the Modern Trader.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -380,18 +380,18 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             </button>
           </div>
 
-          <div className="mt-20 flex justify-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
+          <div className="mt-16 md:mt-24 flex flex-wrap justify-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-700">
             <div className="flex flex-col items-center">
-              <span className="text-3xl font-bold font-orbitron">MT5</span>
-              <span className="text-[10px] uppercase tracking-widest">Integrated</span>
+              <span className="text-3xl md:text-4xl font-bold font-orbitron text-white">MT5</span>
+              <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-mono text-gray-400 mt-2">Integrated</span>
             </div>
-            <div className="flex flex-col items-center border-l border-gray-700 pl-12">
-              <span className="text-3xl font-bold font-orbitron font-rajdhani">AI-GEN</span>
-              <span className="text-[10px] uppercase tracking-widest">Analysis</span>
+            <div className="flex flex-col items-center md:border-l border-white/10 md:pl-16">
+              <span className="text-3xl md:text-4xl font-bold font-orbitron text-white">AI-GEN</span>
+              <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-mono text-gray-400 mt-2">Analysis</span>
             </div>
-            <div className="flex flex-col items-center border-l border-gray-700 pl-12">
-              <span className="text-3xl font-bold font-orbitron">2.4ms</span>
-              <span className="text-[10px] uppercase tracking-widest">Latency</span>
+            <div className="flex flex-col items-center md:border-l border-white/10 md:pl-16">
+              <span className="text-3xl md:text-4xl font-bold font-orbitron text-white">2.4ms</span>
+              <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-mono text-gray-400 mt-2">Latency</span>
             </div>
           </div>
         </div>
@@ -410,19 +410,19 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               <div
                 key={index}
                 onClick={() => setSelectedFeature(index)}
-                className="glass-panel group p-8 rounded-none border-l-2 border-l-cyan-500/50 hover:border-l-cyan-400 transition-all cursor-pointer relative overflow-hidden"
+                className="glass-panel group p-10 rounded-xl border-l-4 border-l-cyan-500/50 hover:border-l-cyan-400 transition-all cursor-pointer relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-100 transition-opacity">
-                  <div className="w-4 h-4 border-t-2 border-r-2 border-cyan-400"></div>
+                <div className="absolute top-0 right-0 p-3 opacity-20 group-hover:opacity-100 transition-opacity">
+                  <div className="w-6 h-6 border-t-2 border-r-2 border-cyan-400"></div>
                 </div>
-                <div className="w-14 h-14 glass-panel border border-cyan-500/20 text-cyan-400 flex items-center justify-center mb-6 group-hover:bg-cyan-500 group-hover:text-black transition-all">
-                  {feature.icon}
+                <div className="w-16 h-16 glass-panel border border-cyan-500/40 text-cyan-400 flex items-center justify-center mb-8 group-hover:bg-cyan-500 group-hover:text-black transition-all shadow-lg shadow-cyan-500/10">
+                  {feature.icon || <ZapIcon className="w-8 h-8" />}
                 </div>
-                <h3 className="text-2xl font-bold mb-3 font-orbitron text-white group-hover:text-cyan-400 transition-colors">{feature.title}</h3>
-                <p className="text-gray-400 font-rajdhani text-lg leading-relaxed">{feature.description}</p>
-                <div className="mt-6 flex items-center gap-2 text-cyan-500/50 font-orbitron text-xs group-hover:text-cyan-400">
-                  <span className="w-1 h-1 bg-cyan-500 rounded-full animate-pulse"></span>
-                  Access Protocols
+                <h3 className="text-3xl font-bold mb-4 font-orbitron text-white group-hover:text-cyan-400 transition-colors tracking-tight uppercase">{feature.title}</h3>
+                <p className="text-gray-300 font-rajdhani text-xl leading-relaxed mb-8">{feature.description}</p>
+                <div className="mt-8 flex items-center gap-3 text-cyan-500 font-orbitron text-xs tracking-widest uppercase">
+                  <span className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_8px_#22d3ee]"></span>
+                  View Terminal Logs
                 </div>
               </div>
             ))}
@@ -485,18 +485,18 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               <div
                 key={index}
                 onClick={() => setSelectedMarket(index)}
-                className="glass-panel group p-10 hover:bg-cyan-500/5 transition-all cursor-pointer relative overflow-hidden flex flex-col items-start"
+                className="glass-panel group p-12 hover:bg-cyan-500/10 transition-all cursor-pointer relative overflow-hidden flex flex-col items-start border-white/5 hover:border-cyan-500/30"
               >
-                <div className="text-6xl mb-6 grayscale group-hover:grayscale-0 transition-all transform group-hover:scale-110 duration-500">{market.emoji}</div>
-                <h3 className="text-3xl font-black font-orbitron mb-4 text-white group-hover:text-cyan-400 transition-colors uppercase">{market.name}</h3>
-                <p className="text-gray-400 font-rajdhani text-xl mb-6">{market.description}</p>
-                <div className="flex flex-wrap gap-2 mb-8">
+                <div className="text-7xl mb-8 grayscale group-hover:grayscale-0 transition-all transform group-hover:scale-110 duration-500">{market.emoji}</div>
+                <h3 className="text-4xl font-black font-orbitron mb-6 text-white group-hover:text-cyan-300 transition-colors uppercase tracking-tighter">{market.name}</h3>
+                <p className="text-gray-300 font-rajdhani text-2xl mb-8 leading-relaxed italic">{market.description}</p>
+                <div className="flex flex-wrap gap-3 mb-10">
                   {market.pairs.split(', ').map((pair, i) => (
-                    <span key={i} className="px-3 py-1 glass-panel border-cyan-500/10 text-cyan-500 text-[10px] font-orbitron">{pair}</span>
+                    <span key={i} className="px-4 py-2 bg-black/50 border border-cyan-500/20 text-cyan-400 text-xs font-bold font-orbitron rounded-lg tracking-widest">{pair}</span>
                   ))}
                 </div>
-                <span className="text-cyan-400 font-orbitron text-xs tracking-widest flex items-center gap-2">
-                  EXPLORE MARKET <div className="w-8 h-[1px] bg-cyan-400"></div>
+                <span className="text-cyan-400 font-orbitron text-sm tracking-[0.2em] font-bold flex items-center gap-4 group-hover:gap-6 transition-all uppercase">
+                  INITIALIZE ANALYTICS <div className="w-12 h-[2px] bg-cyan-400 shadow-[0_0_10px_#22d3ee]"></div>
                 </span>
               </div>
             ))}
@@ -507,7 +507,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       {/* Stats Section */}
       <div className="py-20 border-y border-cyan-500/10 bg-black/40">
         <div className="w-full">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 stagger-in">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 stagger-in">
             {[
               { label: "AI Execution", value: "Real-Time" },
               { label: "Active Markets", value: "04+" },
@@ -527,11 +527,11 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       <div className="py-32 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-blue-500/10 opacity-30"></div>
         <div className="w-full text-center relative z-10 stagger-in">
-          <h2 className="text-5xl md:text-7xl font-black font-orbitron mb-8 tracking-tighter text-white">READY FOR ASCENSION?</h2>
-          <p className="text-xl md:text-2xl text-gray-400 font-rajdhani mb-12 italic">The horizon of automated wealth is one command away.</p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <button onClick={() => onNavigate?.('pricing')} className="cyber-button px-12 py-5 bg-cyan-500 text-black font-bold font-orbitron text-lg uppercase tracking-widest shadow-[0_0_50px_rgba(34,211,238,0.3)]">Establish Connection</button>
-            <button onClick={generateDocumentation} className="px-12 py-5 glass-panel border border-cyan-500/30 font-bold font-orbitron text-cyan-400 uppercase tracking-widest hover:bg-cyan-500/10">Technical Manual</button>
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-black font-orbitron mb-8 tracking-tighter text-white">READY FOR ASCENSION?</h2>
+          <p className="text-lg md:text-xl lg:text-2xl text-gray-400 font-rajdhani mb-12 italic">The horizon of automated wealth is one command away.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
+            <button onClick={() => onNavigate?.('pricing')} className="cyber-button w-full sm:w-auto px-8 md:px-12 py-4 md:py-5 bg-cyan-500 text-black font-bold font-orbitron text-sm md:text-lg uppercase tracking-widest shadow-[0_0_50px_rgba(34,211,238,0.3)]">Establish Connection</button>
+            <button onClick={generateDocumentation} className="w-full sm:w-auto px-8 md:px-12 py-4 md:py-5 glass-panel border border-cyan-500/30 font-bold font-orbitron text-cyan-400 text-sm md:text-base uppercase tracking-widest hover:bg-cyan-500/10">Technical Manual</button>
           </div>
         </div>
       </div>

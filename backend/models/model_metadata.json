@@ -1,0 +1,36 @@
+{
+    "accuracy": 65.48,
+    "precision": 65.62,
+    "training_date": "2026-03-24T18:20:59.350916",
+    "samples": 32505,
+    "assets": [
+        "BTCUSD",
+        "ETHUSD",
+        "XAUUSD",
+        "XAGUSD",
+        "EURUSD",
+        "GBPUSD",
+        "USDJPY",
+        "USDCHF",
+        "AUDUSD",
+        "NZDUSD",
+        "USDCAD"
+    ],
+    "features": [
+        "ema9",
+        "ema15",
+        "rsi",
+        "atr",
+        "macd",
+        "macd_signal",
+        "ema_diff",
+        "ema_cross",
+        "volatility",
+        "ema9_slope",
+        "ema15_slope",
+        "hour",
+        "day_of_week"
+    ],
+    "model_type": "XGBoost Universal Multi-Asset",
+    "status": "Trained and Highly Reliable"
+}
